@@ -1,0 +1,39 @@
+{% extends 'mis_notas/base.html' %} {% block content %}
+
+<h1>Listado de tareas</h1>
+
+{% if context %}
+<ul class="list-group">
+  {% for i in context %} {% if i.importante == True %}
+  <div class="note p-3 m-3 important">
+    <div class="note-header d-flex justify-content-between">
+      <h3>{{i.titulo}}</h3>
+      <form action="{% url 'eliminacion_nota' %}" method="post">
+        {% csrf_token %}
+        <input type="text" hidden value="{{i.titulo}}" name="titulo" />
+        <button class="btn"><i class="bi bi-x"></i></button>
+      </form>
+    </div>
+    <p>{{i.descripcion}}</p>
+  </div>
+  {% else %}
+  <div class="note p-3 m-3">
+    <div class="note-header d-flex justify-content-between">
+      <h3>{{i.titulo}}</h3>
+      <form action="{% url 'eliminacion_nota' %}" method="post">
+        {% csrf_token %}
+        <input type="text" hidden value="{{i.titulo}}" name="titulo" />
+        <button class="btn"><i class="bi bi-x"></i></button>
+      </form>
+    </div>
+    <p>{{i.descripcion}}</p>
+  </div>
+  {% endif %} {% endfor %}
+</ul>
+{% else %}
+<h1>No hay notas</h1>
+{% endif %}
+
+<a class="btn btn-success" href="nueva_nota">Nueva nota</a>
+
+{% endblock %}
